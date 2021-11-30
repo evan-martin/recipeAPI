@@ -21,6 +21,7 @@ router.get('/',(req,res)=>{
 
 //read single recipe
 router.get('/:id',(req,res)=>{
+    res.header("Access-Control-Allow-Origin", "*");
   Recipe.findById(req.params.id,(err, result)=>{
     if (err) console.log(err)
     res.json(result)
@@ -29,6 +30,7 @@ router.get('/:id',(req,res)=>{
 
 //update
 router.put('/:id',(req,res)=>{
+    res.header("Access-Control-Allow-Origin", "*");
   Recipe.findByIdAndUpdate(req.params.id, req.body, (err, result)=>{
     if (err) console.log(err)
     res.json(result)
@@ -37,6 +39,7 @@ router.put('/:id',(req,res)=>{
 
 //delete
 router.delete('/:id',(req,res)=>{
+    res.header("Access-Control-Allow-Origin", "*");
   Recipe.findByIdAndRemove(req.params.id, (err, result)=>{
     if (err) console.log(err)
     res.json(result)
