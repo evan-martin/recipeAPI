@@ -12,6 +12,7 @@ router.post('/',(req,res)=>{
 
 //read
 router.get('/',(req,res)=>{
+  res.header("Access-Control-Allow-Origin", "*");
   Recipe.find((err, result)=>{
     if (err) console.log(err)
     res.json(result)
