@@ -5,6 +5,7 @@ var Recipe = require('./recipe.schema.js')
 //create
 router.post('/',(req,res)=>{
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", 'GET, POST, PUT, DELETE, OPTIONS');
   Recipe.create(req.body, (err, result)=>{
     if (err) console.log(err)
     res.json(result)
@@ -14,6 +15,7 @@ router.post('/',(req,res)=>{
 //read
 router.get('/',(req,res)=>{
   res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", 'GET, POST, PUT, DELETE, OPTIONS');
   Recipe.find((err, result)=>{
     if (err) console.log(err)
     res.json(result)
