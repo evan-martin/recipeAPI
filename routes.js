@@ -1,6 +1,9 @@
 var express = require('express')
 var router = express.Router()
 var Recipe = require('./recipe.schema.js')
+var cors = require('cors')
+
+router.use(cors())
 
 //create
 router.post('/',(req,res)=>{

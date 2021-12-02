@@ -7,7 +7,7 @@ const recipe = require('./routes')
 const mongoose = require('mongoose')
 const http=require('http')
 const dotenv = require('dotenv');
-var cors = require('cors');
+
 
 var router = express.Router()
 var Recipe = require('./recipe.schema.js')
@@ -17,7 +17,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({'extended':'false'}))
 app.use(logger('dev'))
 app.use('/recipe', recipe)
-app.use(cors())
+
 
 
 dotenv.config({path: './.env'});
