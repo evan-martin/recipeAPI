@@ -4,6 +4,7 @@ var Recipe = require('./recipe.schema.js')
 
 //create
 router.post('/',(req,res)=>{
+  res.header("Access-Control-Allow-Origin", "*");
   Recipe.create(req.body, (err, result)=>{
     if (err) console.log(err)
     res.json(result)
