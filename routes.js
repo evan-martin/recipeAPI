@@ -79,10 +79,10 @@ async function scrapeData(url) {
       if (siteType.includes('wordpress')) {
           recipe = wordpressScrape($)
       } else if (siteType.includes('allrecipes')) {
-          console.log("allrecies")
+         recipe = allrecipesScrape($)
       }
       else {
-          generalScrape()
+          recipe = generalScrape($)
       }
   } catch (error) {
       throw error;
