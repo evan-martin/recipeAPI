@@ -37,7 +37,7 @@ async function wordpressScrape($) {
 
 }
 
-async function allrecipesScrape() {
+async function allrecipesScrape($) {
     const json = JSON.parse($('script[type="application/ld+json"]').text());
     const recipe = json[1]
     const instructions = []
@@ -64,7 +64,7 @@ async function allrecipesScrape() {
     return trimmedRecipe
 }
 
-async function generalScrape() {
+async function generalScrape($) {
     const recipe = JSON.parse($('script[type="application/ld+json"]').text());
     const instructions = []
 
