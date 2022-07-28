@@ -28,7 +28,7 @@ async function wordpressScrape($) {
         'name': recipe.name,
         'category': '',
         'imageURL': recipe.image[0],
-        'ingredients': recipe.recipeIngredient.toString(),
+        'ingredients': recipe.recipeIngredient,
         'method': instructions,
         'notes': '',
     }
@@ -56,8 +56,8 @@ async function allrecipesScrape() {
         'name': recipe.name,
         'category': '',
         'imageURL': recipe.image.url,
-        'ingredients': recipe.recipeIngredient.toString(),
-        'method': instructions.toString(),
+        'ingredients': recipe.recipeIngredient,
+        'method': instructions,
         'notes': '',
     }
 
@@ -65,7 +65,6 @@ async function allrecipesScrape() {
 }
 
 async function generalScrape() {
-    console.log('general')
     const recipe = JSON.parse($('script[type="application/ld+json"]').text());
     const instructions = []
 
@@ -83,8 +82,8 @@ async function generalScrape() {
         'name': recipe.name,
         'category': '',
         'imageURL': recipe.image[0].url,
-        'ingredients': recipe.recipeIngredient.toString(),
-        'method': instructions.toString(),
+        'ingredients': recipe.recipeIngredient,
+        'method': instructions,
         'notes': '',
     }
 
