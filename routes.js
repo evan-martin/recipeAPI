@@ -1,7 +1,9 @@
-var express = require('express')
-var router = express.Router()
-var Recipe = require('./recipe.schema.js')
-var cors = require('cors')
+const express = require('express')
+const router = express.Router()
+const Recipe = require('./recipe.schema.js')
+const cors = require('cors')
+const axios = require('axios')
+const cheerio = require('cheerio');
 const { wordpressScrape, allrecipesScrape, generalScrape } = require('./scrapers')
 
 
@@ -56,6 +58,8 @@ router.delete('/:id',(req,res)=>{
 
 
 router.post('/import', async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", 'GET, POST, PUT, DELETE, OPTIONS');
   const url = req.body.url
   if (url) {
       const recipe = await scrapeData(url)
