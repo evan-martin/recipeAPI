@@ -8,10 +8,6 @@ const mongoose = require('mongoose')
 const http=require('http')
 const dotenv = require('dotenv');
 
-
-var router = express.Router()
-var Recipe = require('./recipe.schema.js')
-
 app.use(express.static(path.join(__dirname, 'build')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({'extended':'false'}))

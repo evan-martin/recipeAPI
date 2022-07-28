@@ -2,6 +2,8 @@ var express = require('express')
 var router = express.Router()
 var Recipe = require('./recipe.schema.js')
 var cors = require('cors')
+const { wordpressScrape, allrecipesScrape, generalScrape } = require('./scrapers')
+
 
 router.use(cors())
 
@@ -51,5 +53,37 @@ router.delete('/:id',(req,res)=>{
     res.json(result)
   })
 })
+
+
+router.post('/import', async (req, res) => {
+  const url = req.body.url
+  if (url) {
+      const recipe = await scrapeData(url)
+      res.json(recipe)
+  }
+});
+
+async function scrapeData(url) {
+  let recipe = {}
+  try {
+      const { data } = await axios.get(url);
+
+      const $ = cheerio.load(data);
+
+      const siteType = ($('head').text())
+
+      if (siteType.includes('wordpress')) {
+          recipe = wordpressScrape($)
+      } else if (siteType.includes('allrecipes')) {
+          console.log("allrecies")
+      }
+      else {
+          generalScrape()
+      }
+  } catch (error) {
+      throw error;
+  }
+  return recipe
+};
 
 module.exports = router
