@@ -1,9 +1,5 @@
-async function wordpressScrape($) {
-
-    let json = JSON.parse($('script[type="application/ld+json"]').text());
+function wordpressScrape(json) {
     json = json['@graph']
-    let recipe
-    const instructions = []
 
     Object.keys(json).map((key) => {
         var value = json[key]
@@ -14,59 +10,33 @@ async function wordpressScrape($) {
         })
     })
 
-    Object.keys(recipe.recipeInstructions).map((key) => {
-        if (recipe.recipeInstructions[key].itemListElement) {
-            recipe.recipeInstructions[key].itemListElement.map((instruction) => {
-                instructions.push(instruction.text)
-            })
-        } else {
-            instructions.push(recipe.recipeInstructions[key].text)
-        }
-    })
-
-    const trimmedRecipe = {
-        'name': recipe.name,
-        'category': '',
-        'imageURL': recipe.image[0],
-        'ingredients': recipe.recipeIngredient,
-        'method': instructions,
-        'notes': '',
-    }
-
-  return trimmedRecipe
-
+    return generalScrape(recipe)
 }
 
-async function allrecipesScrape($) {
-    const json = JSON.parse($('script[type="application/ld+json"]').text());
+function allrecipesScrape(json) {
     const recipe = json[1]
-    const instructions = []
-
-    recipe.recipeInstructions.map((instruction) => {
-        if (instruction.itemListElement) {
-            instruction.itemListElement.map((instruction) => {
-                instructions.push(instruction.text)
-            })
-        } else {
-            instructions.push(instruction.text)
-        }
-    })
-
-    const trimmedRecipe = {
-        'name': recipe.name,
-        'category': '',
-        'imageURL': recipe.image.url,
-        'ingredients': recipe.recipeIngredient,
-        'method': instructions,
-        'notes': '',
-    }
-
-    return trimmedRecipe
+    return generalScrape(recipe)
 }
 
-async function generalScrape($) {
-    const recipe = JSON.parse($('script[type="application/ld+json"]').text());
+function generalScrape(json) {
+    const recipe = json
     const instructions = []
+    let image
+
+    if (typeof recipe.image[0] == "object") {
+        if (recipe.image[0].url) {
+            image = recipe.image[0].url
+        } else {
+            image = recipe.image[0]
+        }
+    } else if (recipe.image) {
+        (console.log('hit'))
+        if (recipe.image.url) {
+            image = recipe.image.url
+        } else {
+            image = recipe.image
+        }
+    }
 
     recipe.recipeInstructions.map((instruction) => {
         if (instruction.itemListElement) {
@@ -81,7 +51,7 @@ async function generalScrape($) {
     const trimmedRecipe = {
         'name': recipe.name,
         'category': '',
-        'imageURL': recipe.image[0].url,
+        'imageURL': image,
         'ingredients': recipe.recipeIngredient,
         'method': instructions,
         'notes': '',
