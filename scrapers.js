@@ -30,10 +30,11 @@ function generalScrape(json) {
             image = recipe.image[0]
         }
     } else if (recipe.image) {
-        (console.log('hit'))
         if (recipe.image.url) {
             image = recipe.image.url
-        } else {
+        } else if (recipe.image[0].length > 1) {
+            image = recipe.image[0]
+        } else{
             image = recipe.image
         }
     }
