@@ -1,24 +1,27 @@
-function wordpressScrape(json) {
-    json = json['@graph']
+function preprocessScrape(json) {
 
-    Object.keys(json).map((key) => {
-        var value = json[key]
-        Object.keys(value).map((key) => {
-            if (value[key] == 'Recipe') {
-                recipe = value
-            }
+    if (json['@graph'] || json[0]) {
+        if(json['@graph']){
+            json = json['@graph']
+        }
+
+        Object.keys(json).map((key) => {
+            var value = json[key]
+            Object.keys(value).map((key) => {
+                if (value[key] == 'Recipe') {
+                    recipe = value
+                }
+            })
         })
-    })
+    } 
+    else {
+        recipe = json
+    }
 
-    return generalScrape(recipe)
+    return scrape(recipe)
 }
 
-function allrecipesScrape(json) {
-    const recipe = json[1]
-    return generalScrape(recipe)
-}
-
-function generalScrape(json) {
+function scrape(json) {
     const recipe = json
     const instructions = []
     let image
@@ -34,7 +37,7 @@ function generalScrape(json) {
             image = recipe.image.url
         } else if (recipe.image[0].length > 1) {
             image = recipe.image[0]
-        } else{
+        } else {
             image = recipe.image
         }
     }
@@ -61,6 +64,4 @@ function generalScrape(json) {
     return trimmedRecipe
 }
 
-exports.wordpressScrape = wordpressScrape
-exports.allrecipesScrape = allrecipesScrape
-exports.generalScrape = generalScrape
+exports.preprocessScrape = preprocessScrape

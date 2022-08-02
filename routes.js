@@ -4,7 +4,7 @@ const Recipe = require('./recipe.schema.js')
 const cors = require('cors')
 const axios = require('axios')
 const cheerio = require('cheerio');
-const { wordpressScrape, allrecipesScrape, generalScrape } = require('./scrapers')
+const { preprocessScrape } = require('./scrapers')
 
 
 router.use(cors())
@@ -75,13 +75,8 @@ async function scrapeData(url) {
     const siteType = ($('head').text())
     const json = JSON.parse($('script[type="application/ld+json"]').text());
 
-    if (siteType.includes('wordpress')) {
-      recipe = wordpressScrape(json)
-    } else if (siteType.includes('allrecipes')) {
-      recipe = allrecipesScrape(json)
-    } else {
-      recipe = generalScrape(json)
-    }
+    recipe = preprocessScrape(json)
+
   } catch (error) {
     return { error: "Import Failed, Sorry!" };
   }
