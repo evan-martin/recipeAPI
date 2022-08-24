@@ -58,6 +58,7 @@ function scrape(json) {
         'imageURL': image,
         'ingredients': recipe.recipeIngredient,
         'method': instructions,
+        'tags': recipe.keywords,
         'notes': '',
     }
 
